@@ -1,0 +1,12 @@
+app = "your-app-name"
+
+[build]
+  image = "your-app-name:latest"
+
+[[services]]
+  internal_port = 4000
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = 4000
+    handlers = ["http"]
